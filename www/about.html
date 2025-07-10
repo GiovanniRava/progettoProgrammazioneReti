@@ -2,23 +2,75 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Chi siamo</title>
+    <title>Chi sono</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        main {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 80vh;
+            justify-content: space-between;
+            padding: 20px;
+            margin: 0 auto;
+        }
+
+        .content {
+            margin: 40px 0;
+        }
+
+        .top-title {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .bio, .details {
+            font-size: 1.2em;
+            color: #fff;
+            max-width: 700px;
+            margin: 10px auto;
+            line-height: 1.6;
+        }
+
+        .bottom-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .license {
+            font-size: 0.9em;
+            color: #ddd;
+            margin-top: 20px;
+        }
+    </style>
 </head>
-<body class="about-layout">
-    <header>
-        <h2 class="top-title">Chi sono</h2>
-    </header>
-
-    <main>
-        <h1 class="main-info">Siamo un team di studenti appassionati di programmazione.</h1>
-        <p class="license">Licenza MIT – libero uso a scopo didattico</p>
-
-        <div class="bottom-links">
-            <a href="index.html" class="link-box">Home</a>
-            <a href="contact.html" class="link-box">Contatti</a>
-        </div>
-    </main>
+<body>
+    <div class="container">
+        <main>
+            <div class="content">
+                <h1 class="top-title">Chi sono</h1>
+                <p class="bio">
+                    Sono un ragazzo di 20 anni che studia Ingegneria e Scienze Informatiche presso l'Università di Bologna – Campus di Cesena.
+                </p>
+                <p class="details">
+                    Amo la tecnologia, la programmazione e la risoluzione di problemi reali attraverso il software. Questo sito è parte di un progetto universitario per comprendere meglio il funzionamento dei protocolli web.
+                </p>
+            </div>
+            
+            <div>
+                <div class="bottom-links">
+                    <a href="index.html" class="link-box">Home</a>
+                    <a href="contact.html" class="link-box">Contatti</a>
+                </div>
+                <p class="license">Tutti i diritti riservati – libero uso a scopo didattico</p>
+            </div>
+        </main>
+    </div>
 </body>
 </html>
-
