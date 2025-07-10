@@ -4,18 +4,76 @@
     <meta charset="UTF-8">
     <title>Contatti</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        main {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 80vh;
+            justify-content: space-between;
+            padding: 20px;
+            margin: 0 auto;
+        }
+
+        .content {
+            margin: 40px 0;
+        }
+
+        h1 {
+            color: #fff;
+            margin-bottom: 30px;
+        }
+
+        .contact-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .contact-box p {
+            margin: 12px 0;
+        }
+
+        .bottom-links {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .license {
+            font-size: 0.9em;
+            color: #ddd;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Contattaci</h1>
-        <div class="contact-box">
-            <p><strong>Email:</strong> info@webserverdemo.it</p>
-            <p><strong>Telefono:</strong> +39 333 1234567</p>
-            <p><strong>Indirizzo:</strong> Via del Coding 42, 40100 Bologna</p>
-        </div>
-        <div class="back-links">
-            <a href="index.html" class="link-box">Torna alla Home</a>
-        </div>
+        <main>
+            <div class="content">
+                <h1>Contattaci</h1>
+                <div class="contact-box">
+                    <p><strong>Email:</strong> giovannimaria.rava@studio.unibo.it</p>
+                    <p><strong>Telefono:</strong> +39 333 1234567</p>
+                    <p><strong>Indirizzo:</strong> Via dell'Università 50, Cesena</p>
+                </div>
+            </div>
+            
+            <div>
+                <div class="bottom-links">
+                    <a href="index.html" class="link-box">Torna alla Home</a>
+                </div>
+                <p class="license">Tutti i diritti riservati – libero uso a scopo didattico</p>
+            </div>
+        </main>
     </div>
 </body>
 </html>
