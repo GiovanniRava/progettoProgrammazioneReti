@@ -51,7 +51,7 @@ GET per richiedere risorse. All'interno di HTTP sono prensenti messaggi di due t
     \item richiesta
     \item risposta
 \end{itemize}
-Ogni messaggio è formato da una intestazione (header) seguita dal corpo (body). L'intestazione è composta da una serie di righe di testo
+Ogni messaggio è formato da una intestazione (\emph{header}) seguita dal corpo (\emph{body}). L'intestazione è composta da una serie di righe di testo
 terminate da caratteri di fine linea. Una richiesta inizia con una riga di richiesta, seguita da una o più righe di intestazione. Una 
 risposta inizia con una riga di stato, seguita da una o più righe di intestazione. All'interno del body vengono contenuti i dati da 
 trasferire. 
@@ -66,4 +66,130 @@ richiesta:
     
 Vengono anche gestiti con particolare attenzioni i codici di stato \textbf{200} che corrisponde ad \textbf{OK} e \textbf{404 Not found}
 \section{Socket}
+Il \textbf{socket} è un'interfaccia che le applicazioni usano per interagire con i protocolli dello strato di trasporto. 
+È fornita dal sistema operativo in esecuzione sull'host ed è accessibile tramite primitive di comunicazione. 
+Il socket HTTP, in particolare, viene usato per trasmettere messaggi HTTP tra client e server web.
+
+\chapter{Architettura del Server}
+
+L'architettura del server HTTP realizzato è di tipo \textbf{sequenziale e monothread}, ed è progettata per rispondere a richieste HTTP in ingresso attraverso socket TCP. L'obiettivo è servire contenuti statici (HTML, CSS, immagini) situati nella directory \texttt{www/}, restituendo risposte conformi al protocollo HTTP.
+
+Il server è costituito da un unico file \texttt{server.py}, suddivisibile logicamente in tre macro-componenti:
+\begin{itemize}
+    \item \textbf{Fase di inizializzazione} (apertura del socket e ascolto)
+    \item \textbf{Gestione della richiesta} (ricezione, parsing, recupero file)
+    \item \textbf{Generazione della risposta} (header HTTP, corpo e codice di stato)
+\end{itemize}
+
+\subsection*{3.1 Fase di inizializzazione}
+
+Il server crea e configura il socket TCP che lo mette in ascolto su \texttt{localhost:8080}:
+
+\begin{verbatim}
+serverSocket = socket(AF_INET, SOCK_STREAM)
+serverSocket.bind(('localhost', serverPort))
+serverSocket.listen(1)
+\end{verbatim}
+
+Questa fase prepara il server ad accettare una connessione per volta tramite il metodo \texttt{accept()}.
+
+\newpage
+
+\subsection*{3.2 Ciclo principale del server}
+
+Il server entra in un ciclo infinito dove attende, elabora e risponde alle richieste dei client:
+
+\begin{verbatim}
+while True:
+    connectionSocket, addr = serverSocket.accept()
+    ...
+    connectionSocket.close()
+\end{verbatim}
+
+Ogni iterazione rappresenta l’elaborazione completa di una singola connessione HTTP.
+
+
+\subsection*{3.3 Ricezione e parsing della richiesta}
+
+Il server riceve il messaggio dal client, che rappresenta una richiesta HTTP:
+
+\begin{verbatim}
+message = connectionSocket.recv(1024).decode()
+parts = message.split()
+method = parts[0]
+path = parts[1][1:]
+\end{verbatim}
+
+\begin{itemize}
+    \item \texttt{recv(1024)} riceve al massimo 1024 byte dalla richiesta.
+    \item \texttt{split()} separa la richiesta in blocchi (es. \texttt{GET /index.html HTTP/1.1}).
+    \item Viene estratto il metodo HTTP (\texttt{GET}) e il percorso richiesto.
+    \item Se il path è vuoto, viene servito per default \texttt{index.html}.
+\end{itemize}
+
+
+\subsection*{3.4 Recupero del file richiesto}
+
+Il server costruisce il path assoluto al file richiesto nella directory \texttt{www/}:
+
+\begin{verbatim}
+filepath = os.path.join('www', path)
+if not os.path.isfile(filepath):
+    ...
+\end{verbatim}
+
+Se il file non esiste, viene generata una risposta \texttt{404 Not Found}. Altrimenti, il contenuto viene letto in modalità binaria.
+
+
+\subsection*{3.5 Costruzione della risposta HTTP}
+
+A seconda dell’esito del controllo sul file, vengono costruite le intestazioni e il corpo della risposta. Ad esempio, in caso positivo:
+
+\begin{verbatim}
+HTTP/1.1 200 OK
+Content-Type: text/html
+Content-Length: 1234
+\end{verbatim}
+
+Nel codice:
+
+\begin{verbatim}
+content_type = get_content_type(filepath)
+header = (
+    "HTTP/1.1 200 OK\\r\\n"
+    f"Content-Type: {content_type}\\r\\n"
+    f"Content-Length: {len(body)}\\r\\n"
+    "Connection: close\\r\\n"
+    "\\r\\n"
+).encode()
+connectionSocket.sendall(header + body)
+\end{verbatim}
+
+
+
+\subsection*{3.6 Logging delle richieste}
+
+Ad ogni richiesta viene stampato un log nella console, utile per il monitoraggio e il debugging:
+
+\begin{verbatim}
+log_request(addr, method, path, 200)
+\end{verbatim}
+
+Esempio di output su console:
+
+\begin{verbatim}
+[2025-07-10 11:45:01] ('127.0.0.1', 54322) - GET index.html -> 200
+\end{verbatim}
+
+
+
+\subsection*{3.7 Chiusura della connessione}
+
+Infine, il server chiude il socket dedicato alla comunicazione col client:
+
+\begin{verbatim}
+connectionSocket.close()
+\end{verbatim}
+
+
 \end{document}
