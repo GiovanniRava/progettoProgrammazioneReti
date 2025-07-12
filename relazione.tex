@@ -192,4 +192,74 @@ connectionSocket.close()
 \end{verbatim}
 
 
+\chapter{Analisi tramite Wireshark e Console}
+
+Per validare il corretto funzionamento del Web Server e osservare il traffico di rete generato, è stato utilizzato il tool \textbf{Wireshark}. Tramite il monitoraggio dell’interfaccia \texttt{Loopback}, è stato possibile catturare i pacchetti scambiati tra il browser (client) e il server Python in ascolto su \texttt{localhost:8080}.
+
+\section{Richiesta HTTP \texttt{GET}}
+
+Nell’immagine seguente è mostrato il pacchetto contenente la richiesta \texttt{GET} da parte del client per il file \texttt{/index.html}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{Images/getRequest.png}
+    \caption{Pacchetto HTTP contenente richiesta \texttt{GET}}
+\end{figure}
+
+Come si nota dalla sezione “Hypertext Transfer Protocol” di Wireshark, la richiesta include:
+\begin{itemize}
+    \item Il metodo \texttt{GET}
+    \item La versione HTTP \texttt{HTTP/1.1}
+    \item Header come \texttt{Host}, \texttt{User-Agent}, ecc.
+\end{itemize}
+
+\section{Risposta HTTP con codice \texttt{200 OK}}
+
+A seguito della richiesta, il server restituisce il file richiesto con codice di stato \texttt{200 OK}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{Images/200.png}
+    \caption{Risposta HTTP con codice \texttt{200 OK} e intestazioni corrette}
+\end{figure}
+
+L’header della risposta include:
+\begin{itemize}
+    \item Codice di stato: \texttt{HTTP/1.1 200 OK}
+    \item \texttt{Content-Type: text/html}
+    \item \texttt{Content-Length}
+    \item \texttt{Connection: close}
+\end{itemize}
+
+\section{Richiesta di file inesistente: errore \texttt{404}}
+
+Se il client tenta di accedere a una risorsa non esistente (es. \texttt{/pippo.html}), il server risponde con il messaggio di errore \texttt{404 Not Found}, come mostrato nella figura seguente:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{Images/404NotFound.png}
+    \caption{Risposta HTTP con errore \texttt{404 Not Found}}
+\end{figure}
+
+\section{Log della console del server}
+
+Per ogni richiesta ricevuta, il server produce un log in console con informazioni utili per il debugging. Un esempio di output è:
+
+\begin{verbatim}
+[2025-07-12 10:21:05] ('127.0.0.1', 54322) - GET index.html -> 200
+[2025-07-12 10:22:10] ('127.0.0.1', 54324) - GET pippo.html -> 404
+\end{verbatim}
+
+Questo log mostra:
+\begin{itemize}
+    \item Timestamp della richiesta
+    \item Indirizzo IP e porta del client
+    \item Metodo e risorsa richiesta
+    \item Codice di stato HTTP restituito
+\end{itemize}
+
+\section{Considerazioni}
+
+L’analisi con Wireshark ha confermato che il server genera messaggi HTTP validi secondo specifica e risponde coerentemente a tutte le richieste. L’output in console permette di tracciare l’attività del server, facilitando il debugging e l’eventuale estensione futura del progetto.
+
 \end{document}
