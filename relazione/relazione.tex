@@ -81,7 +81,7 @@ Il server è costituito da un unico file \texttt{server.py}, suddivisibile logic
     \item \textbf{Generazione della risposta} (header HTTP, corpo e codice di stato)
 \end{itemize}
 
-\subsection*{3.1 Fase di inizializzazione}
+\section{3.1 Fase di inizializzazione}
 
 Il server crea e configura il socket TCP che lo mette in ascolto su \texttt{localhost:8080}:
 
@@ -95,7 +95,7 @@ Questa fase prepara il server ad accettare una connessione per volta tramite il 
 
 \newpage
 
-\subsection*{3.2 Ciclo principale del server}
+\section{3.2 Ciclo principale del server}
 
 Il server entra in un ciclo infinito dove attende, elabora e risponde alle richieste dei client:
 
@@ -109,7 +109,7 @@ while True:
 Ogni iterazione rappresenta l’elaborazione completa di una singola connessione HTTP.
 
 
-\subsection*{3.3 Ricezione e parsing della richiesta}
+\section{3.3 Ricezione e parsing della richiesta}
 
 Il server riceve il messaggio dal client, che rappresenta una richiesta HTTP:
 
@@ -128,7 +128,7 @@ path = parts[1][1:]
 \end{itemize}
 
 
-\subsection*{3.4 Recupero del file richiesto}
+\section{3.4 Recupero del file richiesto}
 
 Il server costruisce il path assoluto al file richiesto nella directory \texttt{www/}:
 
@@ -141,7 +141,7 @@ if not os.path.isfile(filepath):
 Se il file non esiste, viene generata una risposta \texttt{404 Not Found}. Altrimenti, il contenuto viene letto in modalità binaria.
 
 
-\subsection*{3.5 Costruzione della risposta HTTP}
+\section{3.5 Costruzione della risposta HTTP}
 
 A seconda dell’esito del controllo sul file, vengono costruite le intestazioni e il corpo della risposta. Ad esempio, in caso positivo:
 
@@ -167,7 +167,7 @@ connectionSocket.sendall(header + body)
 
 
 
-\subsection*{3.6 Logging delle richieste}
+\section{3.6 Logging delle richieste}
 
 Ad ogni richiesta viene stampato un log nella console, utile per il monitoraggio e il debugging:
 
@@ -183,15 +183,13 @@ Esempio di output su console:
 
 
 
-\subsection*{3.7 Chiusura della connessione}
+\section{3.7 Chiusura della connessione}
 
 Infine, il server chiude il socket dedicato alla comunicazione col client:
 
 \begin{verbatim}
 connectionSocket.close()
 \end{verbatim}
-
-
 \chapter{Analisi tramite Wireshark e Console}
 
 Per validare il corretto funzionamento del Web Server e osservare il traffico di rete generato, è stato utilizzato il tool \textbf{Wireshark}. Tramite il monitoraggio dell’interfaccia \texttt{Loopback}, è stato possibile catturare i pacchetti scambiati tra il browser (client) e il server Python in ascolto su \texttt{localhost:8080}.
@@ -202,7 +200,7 @@ Nell’immagine seguente è mostrato il pacchetto contenente la richiesta \textt
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1.0\textwidth]{Images/getRequest.png}
+    \includegraphics[width=0.9\textwidth]{Images/getRequest.png}
     \caption{Pacchetto HTTP contenente richiesta \texttt{GET}}
 \end{figure}
 
