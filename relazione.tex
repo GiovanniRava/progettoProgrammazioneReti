@@ -42,4 +42,28 @@ Progettare un semplice server HTTP in Python (usando socket) e servire un sito w
     \item Logging delle richieste
     \item Aggiunta di animazioni o layout responsive
 \end{itemize}
+\chapter{Fondamenti Teorici}
+\section{Protocollo HTTP}
+Il Hypertext Transfer Protocol (HTTP) è il protocollo standard per la comunicazione tra client e server sul Web . HTTP funziona secondo
+un modello stateless, ovvero ogni transazione è indipendente e non si tiene memoria di essa. Utilizza comandi testuali standard come 
+GET per richiedere risorse. All'interno di HTTP sono prensenti messaggi di due tipi:
+\begin{itemize}
+    \item richiesta
+    \item risposta
+\end{itemize}
+Ogni messaggio è formato da una intestazione (header) seguita dal corpo (body). L'intestazione è composta da una serie di righe di testo
+terminate da caratteri di fine linea. Una richiesta inizia con una riga di richiesta, seguita da una o più righe di intestazione. Una 
+risposta inizia con una riga di stato, seguita da una o più righe di intestazione. All'interno del body vengono contenuti i dati da 
+trasferire. 
+
+In questo progetto viene implementata in particolare la richiesta \textbf{GET}, che consiste nella richiesta di una pagina al server. \\Esempio di 
+richiesta:
+\begin{verbatim}
+    GET /index.html HTTP/1.1
+    Host: localhost:8080
+    User-Agent: Mozilla/5.0
+\end{verbatim}
+    
+Vengono anche gestiti con particolare attenzioni i codici di stato \textbf{200} che corrisponde ad \textbf{OK} e \textbf{404 Not found}
+\section{Socket}
 \end{document}
