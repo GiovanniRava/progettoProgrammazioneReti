@@ -81,7 +81,7 @@ Il server è costituito da un unico file \texttt{server.py}, suddivisibile logic
     \item \textbf{Generazione della risposta} (header HTTP, corpo e codice di stato)
 \end{itemize}
 
-\section{3.1 Fase di inizializzazione}
+\section{Fase di inizializzazione}
 
 Il server crea e configura il socket TCP che lo mette in ascolto su \texttt{localhost:8080}:
 
@@ -95,7 +95,7 @@ Questa fase prepara il server ad accettare una connessione per volta tramite il 
 
 \newpage
 
-\section{3.2 Ciclo principale del server}
+\section{Ciclo principale del server}
 
 Il server entra in un ciclo infinito dove attende, elabora e risponde alle richieste dei client:
 
@@ -109,7 +109,7 @@ while True:
 Ogni iterazione rappresenta l’elaborazione completa di una singola connessione HTTP.
 
 
-\section{3.3 Ricezione e parsing della richiesta}
+\section{Ricezione e parsing della richiesta}
 
 Il server riceve il messaggio dal client, che rappresenta una richiesta HTTP:
 
@@ -128,7 +128,7 @@ path = parts[1][1:]
 \end{itemize}
 
 
-\section{3.4 Recupero del file richiesto}
+\section{Recupero del file richiesto}
 
 Il server costruisce il path assoluto al file richiesto nella directory \texttt{www/}:
 
@@ -141,7 +141,7 @@ if not os.path.isfile(filepath):
 Se il file non esiste, viene generata una risposta \texttt{404 Not Found}. Altrimenti, il contenuto viene letto in modalità binaria.
 
 
-\section{3.5 Costruzione della risposta HTTP}
+\section{Costruzione della risposta HTTP}
 
 A seconda dell’esito del controllo sul file, vengono costruite le intestazioni e il corpo della risposta. Ad esempio, in caso positivo:
 
@@ -167,7 +167,7 @@ connectionSocket.sendall(header + body)
 
 
 
-\section{3.6 Logging delle richieste}
+\section{Logging delle richieste}
 
 Ad ogni richiesta viene stampato un log nella console, utile per il monitoraggio e il debugging:
 
@@ -183,7 +183,7 @@ Esempio di output su console:
 
 
 
-\section{3.7 Chiusura della connessione}
+\section{Chiusura della connessione}
 
 Infine, il server chiude il socket dedicato alla comunicazione col client:
 
