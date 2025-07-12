@@ -242,11 +242,11 @@ Se il client tenta di accedere a una risorsa non esistente (es. \texttt{/pippo.h
 \section{Log della console del server}
 
 Per ogni richiesta ricevuta, il server produce un log in console con informazioni utili per il debugging. Un esempio di output è:
-
-\begin{verbatim}
-[2025-07-12 10:21:05] ('127.0.0.1', 54322) - GET index.html -> 200
-[2025-07-12 10:22:10] ('127.0.0.1', 54324) - GET pippo.html -> 404
-\end{verbatim}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{Images/consoleLog.png}
+    \caption{Risposta HTTP con codice \texttt{200 OK} e intestazioni corrette}
+\end{figure}
 
 Questo log mostra:
 \begin{itemize}
@@ -256,7 +256,7 @@ Questo log mostra:
     \item Codice di stato HTTP restituito
 \end{itemize}
 
-\section{Considerazioni}
+\chapter{Considerazioni finali }
 
 L’analisi con Wireshark ha confermato che il server genera messaggi HTTP validi secondo specifica e risponde coerentemente a tutte le richieste. L’output in console permette di tracciare l’attività del server, facilitando il debugging e l’eventuale estensione futura del progetto.
 
