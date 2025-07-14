@@ -69,12 +69,12 @@ Vengono anche gestiti con particolare attenzioni i codici di stato \textbf{200} 
 Il \textbf{socket} è un'interfaccia che le applicazioni usano per interagire con i protocolli dello strato di trasporto. 
 È fornita dal sistema operativo in esecuzione sull'host ed è accessibile tramite primitive di comunicazione. Il concetto di socket si basa
 sul modello di Input/Output su file di Unix, quindi sulle operazione di \textbf{open, read, write e close}; l’utilizzo avviene secondo le stesse 
-modalità aggiungendo i parametri utili alla comunicazioni quali indirzzi ip, numeri di porta e protocolli. 
+modalità aggiungendo i parametri utili alla comunicazioni quali indirizzi ip, numeri di porta e protocolli. 
 Il socket HTTP, in particolare, viene usato per trasmettere messaggi HTTP tra client e server web.
 
 \chapter{Architettura del Server}
 
-L'architettura del server HTTP realizzato è di tipo \textbf{sequenziale e monothread}, ed è progettata per rispondere a richieste HTTP in ingresso attraverso socket TCP. L'obiettivo è servire contenuti statici (HTML, CSS, immagini) situati nella directory \texttt{www/}, restituendo risposte conformi al protocollo HTTP.
+L'architettura del server HTTP realizzato è di tipo \textbf{sequenziale e monothread}, ed è progettata per rispondere a richieste HTTP in ingresso attraverso socket. L'obiettivo è servire contenuti statici (HTML, CSS, immagini) situati nella directory \texttt{www/}, restituendo risposte conformi al protocollo HTTP.
 
 Il server è costituito da un unico file \texttt{server.py}, suddivisibile logicamente in tre macro-componenti:
 \begin{itemize}
@@ -228,7 +228,7 @@ L’header della risposta include:
     \item Codice di stato: \texttt{HTTP/1.1 200 OK}
     \item \texttt{Content-Type: text/html}
     \item \texttt{Content-Length}
-    \item \texttt{Connection: close}
+    \item \texttt{Connection: keep alive}
 \end{itemize}
 
 \section{Richiesta di file inesistente: errore \texttt{404}}
@@ -247,7 +247,7 @@ Per ogni richiesta ricevuta, il server produce un log in console con informazion
 \begin{figure}[H]
     \centering
     \includegraphics[width=1.0\textwidth]{Images/consoleLog.png}
-    \caption{Risposta HTTP con codice \texttt{200 OK} e intestazioni corrette}
+    \caption{Console Log}
 \end{figure}
 
 Questo log mostra:
